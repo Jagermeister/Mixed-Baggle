@@ -31,5 +31,6 @@
 			<label>Seed</label>
 			<input type="number" [(ngModel)]="settings.seed" min=0 [max]="maxSeed">
 		</div>
+		<a mat-raised-button (click)="settingsStore()">Save Settings?</a>
 	</div>
 </div>

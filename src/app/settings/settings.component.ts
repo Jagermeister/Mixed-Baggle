@@ -6,6 +6,7 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import { DictionaryService } from '../dictionary/dictionary.service';
 import { DiceService } from '../dice/dice.service';
+import { SettingsService } from './settings.service';
 
 @Component({
 	selector: 'settings',
@@ -13,19 +14,20 @@ import { DiceService } from '../dice/dice.service';
 	styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent {
-	@Input() settings: Settings;
-
 	public showSettings: boolean = true;
 	private maxSeed: number = 9999999;
 	private dictionaries: Array<Dictionary>;
 	private dices: Array<DiceCollection>;
 
+	private settings: Settings;
+
 	faAngleDown = faAngleDown;
 	faAngleUp = faAngleUp;
 
-	constructor(private dictionaryService: DictionaryService, private diceService: DiceService) { }
+	constructor(private dictionaryService: DictionaryService, private diceService: DiceService, private settingsService: SettingsService) { }
 
 	ngOnInit() {
+		this.settingsService.settingsFetch().subscribe(settings => this.settings = settings);
 		this.settings.seed = Math.floor(Math.random() * this.maxSeed);
 
 		this.dices = this.diceService.getAllCollections();
@@ -33,12 +35,14 @@ export class SettingsComponent {
 
 		if (this.dices.length > 0) {
 			this.settings.dice = this.dices[0];
-			this.settings.height = this.settings.dice.height;
-			this.settings.width = this.settings.dice.width;
 		}
 
 		if (this.dictionaries.length > 0) {
 			this.settings.dictionary = this.dictionaries[0];
 		}
+	}
+
+	settingsStore() {
+		this.settingsService.settingsStore(Object.assign({}, this.settings));
 	}
 }

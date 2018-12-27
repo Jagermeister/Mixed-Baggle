@@ -15,6 +15,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DiceService } from './dice/dice.service';
 import { DictionaryService } from './dictionary/dictionary.service';
 import { HeaderComponent } from './header/header.component';
+import { SettingsService } from './settings/settings.service';
 
 @NgModule({
 	declarations: [
@@ -35,7 +36,8 @@ import { HeaderComponent } from './header/header.component';
 	],
 	providers: [
 		DiceService,
-		DictionaryService
+		DictionaryService,
+		SettingsService
 	],
 	bootstrap: [AppComponent]
 })

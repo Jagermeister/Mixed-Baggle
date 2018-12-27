@@ -5,6 +5,7 @@ import { TraverseService } from '../game-board/traverse.service';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import { HashEnum } from '../game-board/hashenum';
+import { SettingsService } from '../settings/settings.service';
 import { Settings } from '../settings/settings';
 
 @Component({
@@ -15,8 +16,8 @@ import { Settings } from '../settings/settings';
 export class HomeComponent {
 	title = 'mixed-baggle';
 
-	constructor() { }
-	public settings: Settings = new Settings();
+	constructor(private settingsService: SettingsService) { }
+
 	public shakenDice: Array<Array<Die>> = [];
 	public enteredText: string;
 	public guessedWords: Map<string, number>;
@@ -31,6 +32,8 @@ export class HomeComponent {
 	faAngleDown = faAngleDown;
 	faAngleUp = faAngleUp;
 
+	settings: Settings;
+
 	ngOnInit() {
 		this.guessedWords = new Map<string, number>();
 		this.wordList = new Map<string, number>();
@@ -41,29 +44,27 @@ export class HomeComponent {
 		this.scoring[6] = 3;
 		this.scoring[7] = 5;
 		this.scoring[8] = 11;
+		this.settingsService.settingsFetch().subscribe(result => this.settings = result);
 	}
 
 	public generateBoard = () => {
-		if (this.settings.height * this.settings.width > this.settings.dice.dice.length) {
+		let settings = this.settings;
+		if (settings.height * settings.width > settings.dice.dice.length) {
 			return;
 		}
 
 		this.shakenDice = [];
-		let availableLetters = this.settings.dice.dice.slice();
-		let shakerService = new ShakerService(this.settings.seed);
+		let availableLetters = settings.dice.dice.slice();
+		let shakerService = new ShakerService(settings.seed);
 		let letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-		for (let x = 0; x < this.settings.height; x++) {
+		for (let x = 0; x < settings.height; x++) {
 			let col = new Array<Die>();
 
-			for (let y = 0; y < this.settings.width; y++) {
+			for (let y = 0; y < settings.width; y++) {
 				if (availableLetters.length > 0) {
 					let chosenDie = shakerService.chooseDie(availableLetters);
-
-					availableLetters.filter(function (value, index, arr) {
-						return value === chosenDie;
-					});
-
+					availableLetters.filter(value => value === chosenDie);
 					chosenDie.showing = shakerService.chooseSide(chosenDie);
 
 					let split = chosenDie.showing.split("");
@@ -85,7 +86,7 @@ export class HomeComponent {
 
 		let start = new Date();
 
-		let filteredWordList = this.settings.dictionary.trimWordsContainingLetters(letters);
+		let filteredWordList = settings.dictionary.trimWordsContainingLetters(letters);
 
 		filteredWordList = filteredWordList.filter(x => x.length >= this.minlength);
 
