@@ -4,34 +4,34 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Features
 Current Features are:
-1. Select Dictionary
-2. Select Cube Set
-3. Generate board by seed
-4. Select Word Length
-5. Generating found word list
-6. Highlighting word as typed
-7. Rotating and flipping board.
-8. Scaling board
-9. Board shape (limited to rectangular and not bigger than cube set)
-10. Word scoring
+- Select Dictionary
+- Select Cube Set
+- Generate board by seed
+- Select Word Length
+- Generating found word list
+- Highlighting word as typed
+- Rotating and flipping board.
+- Scaling board
+- Board shape (limited to rectangular and not bigger than cube set)
+- Word scoring
 
 Future features:
-1. Timer
-2. Opponents
-3. Printable view
-4. Edit board
-5. More official cube sets
-6. More dictionaries
-7. Word definition
-8. Opponents
-9. Saving/Loading the game
-10. Downloading game to share
-11. Online play
-12. Better CSS
-13. Training setup
-14. Predictive word choices
-15. Word Heatmaps
-16. Statistically proven tips
+- Timer
+- Opponents
+- Printable view
+- Edit board
+- More official cube sets
+- More dictionaries
+- Word definition
+- Opponents
+- Saving/Loading the game
+- Downloading game to share
+- Online play
+- Better CSS
+- Training setup
+- Predictive word choices
+- Word Heatmaps
+- Statistically proven tips
 
 ## Development server
 
